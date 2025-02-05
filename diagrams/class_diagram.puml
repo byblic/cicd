@@ -1,0 +1,85 @@
+@startuml
+
+class GameSettings {
+    - difficulty: str
+    - bg_color: str
+    + __init__()
+    + parse_args()
+}
+
+class PacMan {
+    - x: int
+    - y: int
+    - direction: int
+    - mouth_open: bool
+    + __init__()
+    + move(grid: list, score: int, game_state: int) -> (int, int)
+    + draw(screen: pygame.Surface)
+}
+
+class Ghost {
+    - x: int
+    - y: int
+    - color: tuple
+    + __init__(x: int, y: int, color: tuple)
+    + move(grid: list)
+    + draw(screen: pygame.Surface)
+}
+
+class Maze {
+    - grid: list
+    + __init__()
+    + draw(screen: pygame.Surface)
+}
+
+class SoundManager {
+    + play_eat_sound()
+    + play_lose_sound()
+    + play_win_sound()
+}
+
+class ScoreManager {
+    - score: int
+    + __init__()
+    + draw(screen: pygame.Surface)
+}
+
+class GameState {
+    <<enumeration>>
+    PLAYING = 0
+    GAME_OVER = 1
+    GAME_WIN = 2
+}
+
+class Game {
+    - settings: GameSettings
+    - pacman: PacMan
+    - ghosts: list[Ghost]
+    - maze: Maze
+    - score_manager: ScoreManager
+    - game_state: int
+    - last_pacman_move_time: int
+    - last_ghost_move_time: int
+    - last_mouth_anim_time: int
+    + __init__()
+    + reset_game()
+    + draw_game_over(screen: pygame.Surface)
+    + draw_game_win(screen: pygame.Surface)
+    + run()
+}
+
+Game --> GameSettings
+Game --> PacMan
+Game --> Ghost
+Game --> Maze
+Game --> ScoreManager
+Game --> GameState
+Game --> SoundManager
+
+PacMan --> Maze
+Ghost --> Maze
+ScoreManager --> pygame.Surface
+Maze --> pygame.Surface
+SoundManager --> pygame.mixer.Sound
+
+@enduml

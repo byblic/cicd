@@ -1,0 +1,40 @@
+@startuml
+start
+
+:Initialize Game;
+:Load Maze, Pac-Man, Ghosts, and Score;
+
+repeat
+    :Wait for Player Input;
+    if (Player presses Arrow Key?) then (Yes)
+        :Move Pac-Man in the specified direction;
+        if (Pac-Man eats a dot?) then (Yes)
+            :Increase Score;
+            :Play Eat Sound;
+            if (All dots eaten?) then (Yes)
+                :Set Game State to WIN;
+                :Play Win Sound;
+                stop
+            else (No)
+            endif
+        else (No)
+        endif
+
+        if (Pac-Man collides with a Ghost?) then (Yes)
+            :Set Game State to LOSE;
+            :Play Lose Sound;
+            stop
+        else (No)
+        endif
+    else (No)
+    endif
+
+    :Move Ghosts;
+    :Update Screen;
+    :Check for Win/Lose Conditions;
+
+repeat while (Game State == PLAYING) is (Yes)
+->No;
+
+stop
+@enduml

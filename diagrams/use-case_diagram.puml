@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+
+actor Player
+
+rectangle "Pac-Man Game" {
+    Player --> (Start Game)
+    Player --> (Move Pac-Man)
+    Player --> (Pause Game)
+    Player --> (Restart Game)
+
+    (Start Game) --> (Load Maze)
+    (Start Game) --> (Initialize Characters)
+    (Start Game) --> (Initialize Score)
+
+    (Move Pac-Man) --> (Eat Dots)
+    (Move Pac-Man) --> (Avoid Ghosts)
+    (Move Pac-Man) --> (Win Game)
+    (Move Pac-Man) --> (Lose Game)
+
+    (Eat Dots) --> (Increase Score)
+    (Eat Dots) --> (Check Win Condition)
+
+    (Avoid Ghosts) --> (Check Collision)
+    (Check Collision) --> (Lose Game)
+
+    (Win Game) --> (Display Win Screen)
+    (Lose Game) --> (Display Lose Screen)
+
+    (Pause Game) --> (Resume Game)
+    (Restart Game) --> (Reset Game State)
+}
+
+@enduml

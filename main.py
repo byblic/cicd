@@ -114,3 +114,31 @@ class PacMan:
         mouth_line_end_x = x + math.cos(math.radians(end_angle)) * CELL_SIZE // 2
         mouth_line_end_y = y - math.sin(math.radians(end_angle)) * CELL_SIZE // 2
         pygame.draw.line(screen, BLACK, (x, y), (mouth_line_end_x, mouth_line_end_y), 2)
+
+ 
+class Maze:
+    def __init__(self):
+        self.grid = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
+        self.generate_walls()
+        self.add_food()
+
+    def generate_walls(self):
+        for y in range(GRID_HEIGHT):
+            for x in range(GRID_WIDTH):
+                if x == 0 or y == 0 or x == GRID_WIDTH - 1 or y == GRID_HEIGHT - 1:
+                    self.grid[y][x] = 1  # Wall
+
+    def add_food(self):
+        for y in range(1, GRID_HEIGHT - 1):
+            for x in range(1, GRID_WIDTH - 1):
+                if self.grid[y][x] == 0 and random.random() < 0.1:  # Add food
+                    self.grid[y][x] = 0  # Food marker
+
+    def draw(self, screen):
+        for y in range(GRID_HEIGHT):
+            for x in range(GRID_WIDTH):
+                rect = pygame.Rect(x * CELL_SIZE, y * CELL_SIZE + 50, CELL_SIZE, CELL_SIZE)
+                if self.grid[y][x] == 1:
+                    pygame.draw.rect(screen, BLUE, rect)  # Wall
+                elif self.grid[y][x] == 0:
+                    pygame.draw.circle(screen, WHITE, rect.center, 5)  # Food
